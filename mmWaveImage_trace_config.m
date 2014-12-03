@@ -11,8 +11,8 @@ DEBUG_ON = 1;
 
 
 %% Cinemoco device related
-dev_id_azi = '/dev/ttyUSB0';
-dev_id_elev = '/dev/ttyUSB1';
+dev_id_azi = 'COM6';
+dev_id_elev = 'COM7';
 
 serial_obj_azi = [];
 serial_obj_elev = [];
@@ -24,31 +24,29 @@ sport_default_params.pulse_rate = 5000;
 sport_default_params.angle_factor = 32000;
 
 
-
-
 %% Angle related variables
-% Azimuthal angle resolution by 5 deg
-azi_angle_resolution = 5;
+% Azimuthal angle resolution by 1 deg
+azi_angle_resolution = 1;
 % Max. angle
 azi_min_angle = 0;
 % Min. angle
-azi_max_angle = 180;
+azi_max_angle = 60;
 
-% Elevation angle resolution by 5 deg
-elev_angle_resolution = 5;
+% Elevation angle resolution by 1 deg
+elev_angle_resolution = 1;
 % Max. angle
 elev_min_angle = 0;
 % Min. angle
-elev_max_angle = 180;
+elev_max_angle = 60;
 
 
 %% Trace collection/procedure variables
 
 % How many packets to collect from one resolution i.e. (r, theta, phi)
-packet_per_resolution = 10;
+packet_per_resolution = 50;
 
 % Trace file config
-trace_dir = '/home/sanjib/60_GHz_platform/Implementation/60GHz_imaging/traces/body_shape';
+trace_dir = 'C:\Users\Xinyu Zhang\Desktop\Sanjib\60GHz_imaging\traces/body_shape';
 trace_file_name = 'location';
 
 % Collect traces on different dates

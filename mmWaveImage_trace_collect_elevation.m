@@ -32,12 +32,11 @@ elev_angle = elev_min_angle;
 
 % Reset motors: azimuth and elevation
 reset = 0;
-serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, azi_angle, reset, sport_default_params);
+% serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, azi_angle, reset, sport_default_params);
 serial_obj_elev = axis360_rotate(dev_id_elev, serial_obj_elev, elev_angle, reset, sport_default_params);
 pause(5);
 
 for i = 1:azi_steps
-    fprintf('Azimuth angle: %d\n', azi_angle);
     for j = 1:elev_steps
         num_pkt = 1;        
         while num_pkt <= packet_per_resolution
@@ -53,27 +52,28 @@ for i = 1:azi_steps
         serial_obj_elev = axis360_rotate(dev_id_elev, serial_obj_elev, -elev_angle, reset, sport_default_params);
         pause(0.2);
     end
-    pause(2);
-    % Reset back to original position
+    pause(1);
     elev_angle = 0;
-%     serial_obj_elev = axis360_rotate(dev_id_elev, serial_obj_elev, (elev_max_angle - elev_min_angle - 90 + elev_angle_resolution), reset, sport_default_params);
-    serial_obj_elev = axis360_rotate(dev_id_elev, serial_obj_elev, -elev_angle_resolution, reset, sport_default_params);
-    pause(3);
+    serial_obj_elev = axis360_rotate(dev_id_elev, serial_obj_elev, (elev_max_angle - elev_min_angle - 90 + elev_angle_resolution), reset, sport_default_params);
     % Rotate azimuth motor by steps
     azi_angle = azi_angle + azi_angle_resolution;
 	% Rotate the azimuth motor
-	serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, azi_angle, reset, sport_default_params);
-    pause(1);
+% 	serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, azi_angle, reset, sport_default_params);
+	prompt = sprintf('Move azimuth? (y/n)');
+    c = input(prompt,'s');
+    if (c == 'y' || c == 'Y')
+        continue;
+    else
+        return;
+    end
+    
 end
-% Reset back to original position
-azi_angle = 0;
-serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, -azi_angle_resolution, reset, sport_default_params);
 
 reset = 2;
-serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, 0, reset, sport_default_params);
+% serial_obj_azi = axis360_rotate(dev_id_azi, serial_obj_azi, 0, reset, sport_default_params);
 serial_obj_elev = axis360_rotate(dev_id_azi, serial_obj_elev, 0, reset, sport_default_params);
 
-csvwrite('rss_heatmap_chair.dat', rot90(rss_heatmap));
+csvwrite('rss_heatmap_bg_wo_pccabinet.dat', rot90(rss_heatmap));
 
 %% Trace write to file
 
